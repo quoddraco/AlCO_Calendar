@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -37,6 +38,23 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.text2.observe(viewLifecycleOwner) {
             textViewMonth.text = it
         }
+
+        val buttonLeft: Button = binding.buttonLeft
+        buttonLeft.setOnClickListener {
+            dashboardViewModel.incrementClickCountMin()
+
+
+        }
+
+        val buttonRight: Button = binding.buttonRight
+        buttonRight.setOnClickListener {
+            dashboardViewModel.incrementClickCountPlus()
+
+
+            // Обработчик нажатия на кнопку 2
+            // Добавьте код, который должен выполниться при нажатии на кнопку 2
+        }
+
         return root
     }
 
