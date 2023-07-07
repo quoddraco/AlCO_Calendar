@@ -32,6 +32,11 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+        val textViewMonth: TextView = binding.textMonth
+        dashboardViewModel.text2.observe(viewLifecycleOwner) {
+            textViewMonth.text = it
+        }
         return root
     }
 
