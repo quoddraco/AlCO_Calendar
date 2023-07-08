@@ -37,6 +37,26 @@ class DashboardFragment : Fragment() {
 
         val tableLayout: TableLayout = binding.tableLayout
         dashboardViewModel.textDay.observe(viewLifecycleOwner) {
+            // Добавление дней недели
+            val weekDays = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
+            val headerRow = TableRow(requireContext())
+            for (day in weekDays) {
+                val headerTextView = TextView(requireContext())
+                headerTextView.text = day
+                headerTextView.setPadding(16, 16, 16, 16)
+                headerTextView.gravity = Gravity.CENTER
+                headerTextView.setTypeface(null, Typeface.BOLD)
+                val layoutParams = TableRow.LayoutParams(
+                    TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT
+                )
+                layoutParams.setMargins(8, 8, 8, 8)
+
+                headerRow.addView(headerTextView, layoutParams)
+            }
+            tableLayout.addView(headerRow)
+
+
             val numbers = mutableListOf<Int>()
             for (i in 1..it) {
                 numbers.add(i)
@@ -63,7 +83,11 @@ class DashboardFragment : Fragment() {
 
                 row?.addView(textView, layoutParams)
             }
+
         }
+
+
+
 
         val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {

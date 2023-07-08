@@ -18,6 +18,8 @@ class DashboardViewModel : ViewModel() {
 
     private val calendar = Calendar.getInstance()
     private val currentMonth = calendar.get(Calendar.MONTH)
+    private var currentYear = calendar.get(Calendar.YEAR)
+
     private var clickCountMax = (11 - currentMonth) + 1
     private var clickCountMin = (-1 * currentMonth) - 1
 
@@ -32,7 +34,7 @@ class DashboardViewModel : ViewModel() {
     val textDay: LiveData<Int> = _textDay
 
     init {
-        _text.value = "Нажатий: $clickCount"
+        _text.value = currentYear.toString()
         _textMonth.value = map[currentMonth + clickCount]
         _textDay.value = getLastDayOfMonth(currentMonth + clickCount)
 
@@ -42,8 +44,9 @@ class DashboardViewModel : ViewModel() {
         clickCount++
         if (clickCount == clickCountMax){
             clickCount = (-1 * currentMonth)
+            currentYear++
         }
-        _text.value = "Нажатий: $clickCount"
+        _text.value = currentYear.toString()
         _textMonth.value = map[currentMonth + clickCount]
         _textDay.value = getLastDayOfMonth(currentMonth + clickCount)
     }
@@ -51,8 +54,9 @@ class DashboardViewModel : ViewModel() {
         clickCount--
         if (clickCount == clickCountMin){
             clickCount = (11 - currentMonth)
+            currentYear--
         }
-        _text.value = "Нажатий: $clickCount"
+        _text.value = currentYear.toString()
         _textMonth.value = map[currentMonth + clickCount]
         _textDay.value = getLastDayOfMonth(currentMonth + clickCount)
     }
