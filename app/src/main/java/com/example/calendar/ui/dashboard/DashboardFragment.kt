@@ -36,9 +36,9 @@ class DashboardFragment : Fragment() {
         val root: View = binding.root
 
         val tableLayout: TableLayout = binding.tableLayout
-        dashboardViewModel.textDay.observe(viewLifecycleOwner) {
+        dashboardViewModel.numbers.observe(viewLifecycleOwner) {
             // Добавление дней недели
-            val weekDays = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
+            val weekDays = listOf("Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб")
             val headerRow = TableRow(requireContext())
             for (day in weekDays) {
                 val headerTextView = TextView(requireContext())
@@ -57,10 +57,10 @@ class DashboardFragment : Fragment() {
             tableLayout.addView(headerRow)
 
 
-            val numbers = mutableListOf<Int>()
-            for (i in 1..it) {
-                numbers.add(i)
-            }
+            val numbers = it
+//            for (i in 1..it) {
+//                numbers.add(i)
+//            }
             val columnCount = 7 // Количество столбцов (неделя)
 
             var row: TableRow? = null
@@ -71,7 +71,7 @@ class DashboardFragment : Fragment() {
                 }
 
                 val textView = TextView(requireContext())
-                textView.text = number.toString()
+                textView.text = if (number == 0) "" else number.toString() // Проверка на равенство нулю
                 textView.setPadding(16, 16, 16, 16)
                 textView.gravity = Gravity.CENTER
 
@@ -85,8 +85,6 @@ class DashboardFragment : Fragment() {
             }
 
         }
-
-
 
 
         val textView: TextView = binding.textDashboard
@@ -111,9 +109,6 @@ class DashboardFragment : Fragment() {
             dashboardViewModel.incrementClickCountPlus()
 
         }
-
-
-
 
         return root
     }

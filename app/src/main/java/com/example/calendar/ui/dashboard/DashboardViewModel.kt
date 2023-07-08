@@ -3,6 +3,8 @@ package com.example.calendar.ui.dashboard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.time.DayOfWeek
+import java.time.YearMonth
 import java.util.*
 
 class DashboardViewModel : ViewModel() {
@@ -33,10 +35,13 @@ class DashboardViewModel : ViewModel() {
     private val _textDay= MutableLiveData<Int>()
     val textDay: LiveData<Int> = _textDay
 
+    private val _numbers = MutableLiveData<List<Int>>()
+    val numbers: LiveData<List<Int>> = _numbers
+
     init {
         _text.value = currentYear.toString()
         _textMonth.value = map[currentMonth + clickCount]
-        _textDay.value = getLastDayOfMonth(currentMonth + clickCount)
+        _numbers.value = getDayWeek(currentYear, currentMonth + clickCount)
 
     }
 
@@ -46,9 +51,10 @@ class DashboardViewModel : ViewModel() {
             clickCount = (-1 * currentMonth)
             currentYear++
         }
+
         _text.value = currentYear.toString()
         _textMonth.value = map[currentMonth + clickCount]
-        _textDay.value = getLastDayOfMonth(currentMonth + clickCount)
+        _numbers.value = getDayWeek(currentYear, currentMonth + clickCount)
     }
     fun incrementClickCountMin() {
         clickCount--
@@ -58,14 +64,28 @@ class DashboardViewModel : ViewModel() {
         }
         _text.value = currentYear.toString()
         _textMonth.value = map[currentMonth + clickCount]
-        _textDay.value = getLastDayOfMonth(currentMonth + clickCount)
+        _numbers.value = getDayWeek(currentYear, currentMonth + clickCount)
     }
 
-    fun getLastDayOfMonth(month: Int): Int {
+    fun getLastDayOfMonth(year: Int, month: Int): Int {
         val calendar = Calendar.getInstance()
-        calendar.set(Calendar.MONTH, month)
+        calendar.set(year, month, 1)
         val lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         return lastDay
+    }
+
+    fun getDayWeek(year: Int, month: Int): MutableList<Int> {
+        val numbers = mutableListOf<Int>()
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, 1)
+        val DayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        for (i in 2..DayOfWeek) {
+            numbers.add(0)
+        }
+        for (i in 1..getLastDayOfMonth( currentYear ,currentMonth + clickCount)) {
+            numbers.add(i)
+        }
+        return numbers
     }
 
 
