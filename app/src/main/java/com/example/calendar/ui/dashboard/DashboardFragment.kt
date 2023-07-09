@@ -26,14 +26,18 @@ class DashboardFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    private fun showPopupDialog(day: String, Month: String, Year: String) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("$day $Month $Year")
-            .setPositiveButton("ОК") { dialog, _ ->
-                dialog.dismiss()
-            }
-        val dialog = builder.create()
-        dialog.show()
+    private fun showPopupDialog(day: String, month: String, year: String) {
+//        val builder = AlertDialog.Builder(requireContext())
+//        builder.setMessage("$day $Month $Year")
+//            .setPositiveButton("ОК") { dialog, _ ->
+//                dialog.dismiss()
+//            }
+//        val dialog = builder.create()
+//        dialog.show()
+        val popupDialog = PopupDialogFragment.newInstance(day, month, year)
+        popupDialog.show(childFragmentManager, "popup_dialog")
+
+
     }
 
     override fun onCreateView(
