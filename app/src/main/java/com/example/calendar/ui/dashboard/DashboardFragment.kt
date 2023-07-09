@@ -1,5 +1,6 @@
 package com.example.calendar.ui.dashboard
 
+import android.app.AlertDialog
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
@@ -23,6 +24,17 @@ class DashboardFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+
+    private fun showPopupDialog(day: String, Month: String, Year: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("$day $Month $Year")
+            .setPositiveButton("ОК") { dialog, _ ->
+                dialog.dismiss()
+            }
+        val dialog = builder.create()
+        dialog.show()
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -82,6 +94,15 @@ class DashboardFragment : Fragment() {
                 layoutParams.setMargins(8, 8, 8, 8)
 
                 row?.addView(textView, layoutParams)
+                textView.setOnClickListener {
+                    // Ваш код для обработки клика
+                    // Здесь можно отобразить всплывающее окно или выполнить другие действия
+
+                    val day = textView.text.toString()
+                    val textViewMonth: TextView = binding.textMonth
+                    val textViewYear: TextView = binding.textDashboard
+                    showPopupDialog(day, textViewMonth.text as String, textViewYear.text as String)
+                }
             }
 
         }
@@ -109,6 +130,8 @@ class DashboardFragment : Fragment() {
             dashboardViewModel.incrementClickCountPlus()
 
         }
+
+
 
         return root
     }
