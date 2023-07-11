@@ -10,12 +10,19 @@
         android:gravity="center"
         android:padding="16dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <Button
         android:id="@+id/okButton"
-        android:layout_width="198dp"
-        android:layout_height="70dp"
+        android:layout_width="201dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="OK" />
+    <Button
+        android:id="@+id/Cancelbutton"
+        android:layout_width="201dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Отмена" />
+
+
 
 </LinearLayout>

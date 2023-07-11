@@ -1,9 +1,7 @@
 package com.example.calendar.ui.dashboard
 
-import android.app.AlertDialog
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +10,9 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.calendar.R
 import com.example.calendar.databinding.FragmentDashboardBinding
@@ -26,18 +26,9 @@ class DashboardFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    private fun showPopupDialog(day: String, month: String, year: String) {
-//        val builder = AlertDialog.Builder(requireContext())
-//        builder.setMessage("$day $Month $Year")
-//            .setPositiveButton("ОК") { dialog, _ ->
-//                dialog.dismiss()
-//            }
-//        val dialog = builder.create()
-//        dialog.show()
+    private fun showPopupDialog(day: String, month: String, year: String){
         val popupDialog = PopupDialogFragment.newInstance(day, month, year)
         popupDialog.show(childFragmentManager, "popup_dialog")
-
-
     }
 
     override fun onCreateView(
@@ -45,6 +36,7 @@ class DashboardFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
+
         val dashboardViewModel =
                 ViewModelProvider(this).get(DashboardViewModel::class.java)
 
@@ -74,9 +66,6 @@ class DashboardFragment : Fragment() {
 
 
             val numbers = it
-//            for (i in 1..it) {
-//                numbers.add(i)
-//            }
             val columnCount = 7 // Количество столбцов (неделя)
 
             var row: TableRow? = null
@@ -98,14 +87,13 @@ class DashboardFragment : Fragment() {
                 layoutParams.setMargins(8, 8, 8, 8)
 
                 row?.addView(textView, layoutParams)
-                textView.setOnClickListener {
-                    // Ваш код для обработки клика
-                    // Здесь можно отобразить всплывающее окно или выполнить другие действия
 
+                textView.setOnClickListener {
                     val day = textView.text.toString()
                     val textViewMonth: TextView = binding.textMonth
                     val textViewYear: TextView = binding.textDashboard
                     showPopupDialog(day, textViewMonth.text as String, textViewYear.text as String)
+
                 }
             }
 
